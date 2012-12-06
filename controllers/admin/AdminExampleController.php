@@ -53,6 +53,14 @@ class AdminExampleController extends ModuleAdminController
 			),
 		);
 		
+		// Gère les positions
+		$this->fields_list['position'] = array(
+    'title' => $this->l('Position'),
+    'width' => 70,
+    'align' => 'center',
+    'position' => 'position'
+   );
+		
 		$lists = parent::renderList();
 		
 		parent::initToolbar();
