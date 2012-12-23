@@ -10,6 +10,46 @@
  * @since      	File available since Release 1.0
 */
 
+//
+// NOTES
+//
+/*
+ 	// Know if the module is enabled or not
+ 	Module::isEnabled($this->name); 
+ 
+ 	// Know if the module is install or not
+	Module::isInstalled($this->name); 
+
+	// Know if the module is registerd in one particular hook
+	$this->isRegisteredInHook('hook_name');
+	
+	// Use the cache
+	$this->isCached($template);
+	
+	//	Check if the module is transplantable on the hook in parameter
+	$this->isHookableOn('hook_name');
+	
+	// Get errors, warning, ...
+	$this->getErrors();
+	$this->getConfirmations();
+	
+	// add a warning message to display at the top of the admin page
+	$this->adminDisplayWarning('message');
+	
+	// add a info message to display at the top of the admin page
+	adminDisplayInformation('message');
+	
+	// You don't need to call this one BUT, if you want to make an override in 
+	// a new version of your module, you will need to call this one (it's call
+	// only in install, at first)
+	$this->installOverrides();
+	
+	// You can disable the module for one shop (the actual in context)
+	$this->disable();
+	// ... or for all shop
+	$this->disabel(true);
+*/
+
 // TODO
 // Integrer les langues (champs/value) (http://www.prestashop.com/forums/index.php?/topic/189016-questions-sur-la-creation-de-modules-mvc/page__view__findpost__p__936271)
 // Integrer un fichier à télécharger (http://www.prestashop.com/forums/index.php?/topic/189016-questions-sur-la-creation-de-modules-mvc/page__view__findpost__p__939093)
@@ -85,7 +125,7 @@ class Example extends Module
 		$parent_tab = new Tab();
 		$parent_tab->name = 'Main Tab Example';
 		$parent_tab->class_name = 'AdminMainExample';
-		$parent_tab->id_parent = 0;
+		$parent_tab->id_parent = 0; // Home tab
 		$parent_tab->module = $this->name;
 		$parent_tab->add();
 		
@@ -122,9 +162,11 @@ class Example extends Module
 		$tab->delete();
 		
 		// Uninstall Module
-		if (!parent::uninstall() ||
-		    !$this->unregisterHook('actionObjectExampleDataAddAfter'))
+		if (!parent::uninstall())
 			return false;
+			
+		// You don't need to call this one because uninstall do it for you
+		// !$this->unregisterHook('actionObjectExampleDataAddAfter')
 
 		return true;
 	}
