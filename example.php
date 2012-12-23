@@ -5,9 +5,49 @@
  * @category   	Module / checkout
  * @author     	PrestaEdit <j.danse@prestaedit.com>
  * @copyright  	2012 PrestaEdit
- * @version   	1.0	
+ * @version   	1.5
  * @link       	http://www.prestaedit.com/
  * @since      	File available since Release 1.0
+*/
+
+//
+// NOTES
+//
+/*
+ 	// Know if the module is enabled or not
+ 	Module::isEnabled($this->name); 
+ 
+ 	// Know if the module is install or not
+	Module::isInstalled($this->name); 
+
+	// Know if the module is registerd in one particular hook
+	$this->isRegisteredInHook('hook_name');
+	
+	// Use the cache
+	$this->isCached($template);
+	
+	//	Check if the module is transplantable on the hook in parameter
+	$this->isHookableOn('hook_name');
+	
+	// Get errors, warning, ...
+	$this->getErrors();
+	$this->getConfirmations();
+	
+	// add a warning message to display at the top of the admin page
+	$this->adminDisplayWarning('message');
+	
+	// add a info message to display at the top of the admin page
+	adminDisplayInformation('message');
+	
+	// You don't need to call this one BUT, if you want to make an override in 
+	// a new version of your module, you will need to call this one (it's call
+	// only in install, at first)
+	$this->installOverrides();
+	
+	// You can disable the module for one shop (the actual in context)
+	$this->disable();
+	// ... or for all shop
+	$this->disabel(true);
 */
 
 // TODO
@@ -30,25 +70,49 @@ class Example extends Module
 {			
   public function __construct()
   {  		  	
+		// Author of the module
+		$this->author = 'PrestaEdit'; 
+  	// Name of the module ; the same that the directory and the module ClassName
 	  $this->name = 'example';
-	  $this->tab = 'others';
-	  $this->version = '1.4';
-	  $this->ps_versions_compliancy['min'] = '1.5.0.1'; 
-		$this->author = 'PrestaEdit';
-		$this->need_instance = 0;
-	
+	  // Tab where it's the module (administration, front_office_features, ...)
+	  $this->tab = 'others';	
+	  // Current version of the module
+	  $this->version = '1.5';
+	  
+	  // Min version of PrestaShop wich the module can be install
+	  $this->ps_versions_compliancy['min'] = '1.5';
+	  // Max version of PrestaShop wich the module can be install
+	  $this->ps_versions_compliancy['max'] = '1.6';
+	  // OR $this->ps_versions_compliancy = array('min' => '1.5', 'max' => '1.6');
+		
+		// 	The need_instance flag indicates whether to load the module's class when displaying the "Modules" page 
+		//	in the back-office. If set at 0, the module will not be loaded, and therefore will spend less resources 
+		//	to generate the page module. If your modules needs to display a warning message in the "Modules" page, 
+		//	then you must set this attribute to 1.
+		$this->need_instance = 0; 
+		
+		// Modules needed for install
+		$this->dependencies = array();
+		// e.g. $this->dependencies = array('blockcart', 'blockcms');
+		
+		// Limited country 
+		$this->limited_countries = array(); 
+		// e.g. $this->limited_countries = array('fr', 'us');
+					
 	  parent::__construct();
-	
+		
+		// Name in the modules list
 		$this->displayName = $this->l('Example');
+		// A little description of the module
 	  $this->description = $this->l('Module Example');
 	  	  
+	  // Message show when you wan to delete the module	  
 		$this->confirmUninstall = $this->l('Are you sure you want to delete this module ?');
 	  
 	  if ($this->active && Configuration::get('EXAMPLE_CONF') == '')
 			$this->warning = $this->l('You have to configure your module');
   }
   
-
 	public function install()
 	{
 		// Install SQL
@@ -61,7 +125,7 @@ class Example extends Module
 		$parent_tab = new Tab();
 		$parent_tab->name = 'Main Tab Example';
 		$parent_tab->class_name = 'AdminMainExample';
-		$parent_tab->id_parent = 0;
+		$parent_tab->id_parent = 0; // Home tab
 		$parent_tab->module = $this->name;
 		$parent_tab->add();
 		
@@ -72,14 +136,15 @@ class Example extends Module
 		$tab->id_parent = $parent_tab->id;
 		$tab->module = $this->name;
 		$tab->add();
-		
-		
+				
 		//Init
 		Configuration::updateValue('EXAMPLE_CONF', '');	
 		
 		// Install Module  
+		// In this part, you don't need to add a hook in database, even if it's a new one. 
+		// The registerHook method will do it for your !		
    	return parent::install()
-		&& $this->registerHook('actionObjectExampleDataAddAfter');					
+		&& $this->registerHook('actionObjectExampleDataAddAfter');		
   }    
   
   public function uninstall()
@@ -97,9 +162,11 @@ class Example extends Module
 		$tab->delete();
 		
 		// Uninstall Module
-		if (!parent::uninstall() ||
-		    !$this->unregisterHook('actionObjectExampleDataAddAfter'))
+		if (!parent::uninstall())
 			return false;
+			
+		// You don't need to call this one because uninstall do it for you
+		// !$this->unregisterHook('actionObjectExampleDataAddAfter')
 
 		return true;
 	}
@@ -131,6 +198,7 @@ class Example extends Module
 		$this->context->smarty->assign('EXAMPLE_CONF', pSQL(Tools::getValue('EXAMPLE_CONF', Configuration::get('EXAMPLE_CONF'))));
 		$this->context->smarty->assign('submitName', 'submit'.ucfirst($this->name));
 		
+		// You can return html, but I prefer this new version: use smarty in admin, :)
 		return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
 	}
 	
