@@ -22,6 +22,9 @@ class AdminExampleController extends ModuleAdminController
 		$this->bulk_actions = array('delete' => array('text' => $this->l('Delete selected'), 'confirm' => $this->l('Delete selected items?')));
 		$this->context = Context::getContext();
 		
+		// définition de l'upload, chemin par défaut _PS_IMG_DIR_
+		$this->fieldImageSettings = array('name' => 'image', 'dir' => 'example');
+		
 		parent::__construct();
 	}
 	
@@ -134,6 +137,13 @@ class AdminExampleController extends ModuleAdminController
 					'size' => 40
 				),
 				array(
+					'type' => 'file',
+					'label' => $this->l('Logo:'),
+					'name' => 'image',
+					'display_image' => true,
+					'desc' => $this->l('Upload Example image from your computer')
+				),
+				array(
 					'type' => 'text',
 					'label' => $this->l('Lorem:'),
 					'name' => 'lorem',
@@ -154,6 +164,20 @@ class AdminExampleController extends ModuleAdminController
 
 		if (!($obj = $this->loadObject(true)))
 			return;
+		
+		
+		/*gestion de l'affichage de la vignette
+		@TODO : problème, suppression d'image 
+		*/
+		$image = ImageManager::thumbnail(_PS_IMG_DIR_.'region/'.$obj->id.'.jpg', $this->table.'_'.(int)$obj->id.'.'.$this->imageType, 350, $this->imageType, true);
+		
+		$this->fields_value = array(
+			'image' => $image ? $image : false,
+			'size' => $image ? filesize(_PS_IMG_DIR_.'example/'.$obj->id.'.jpg') / 1000 : false,
+			
+		);	
+			
+			
 			
 		$this->fields_value = array('lorem' => "ipsum");
 
