@@ -52,7 +52,7 @@
 
 // TODO
 // Integrer les langues (champs/value) (http://www.prestashop.com/forums/index.php?/topic/189016-questions-sur-la-creation-de-modules-mvc/page__view__findpost__p__936271)
-// Integrer un fichier à télécharger (http://www.prestashop.com/forums/index.php?/topic/189016-questions-sur-la-creation-de-modules-mvc/page__view__findpost__p__939093)
+// Integrer un fichier ï¿½ tï¿½lï¿½charger (http://www.prestashop.com/forums/index.php?/topic/189016-questions-sur-la-creation-de-modules-mvc/page__view__findpost__p__939093)
 // Integrer des commandes sur addRowAction
 
 // Security
@@ -192,11 +192,13 @@ class Example extends Module
 	{		
 		if(isset($errors))
 			$this->context->smarty->assign('errors', $errors);
-		
+		else
+			$errors = array();
 		$this->context->smarty->assign('request_uri', Tools::safeOutput($_SERVER['REQUEST_URI']));
 		$this->context->smarty->assign('path', $this->_path);
 		$this->context->smarty->assign('EXAMPLE_CONF', pSQL(Tools::getValue('EXAMPLE_CONF', Configuration::get('EXAMPLE_CONF'))));
 		$this->context->smarty->assign('submitName', 'submit'.ucfirst($this->name));
+		$this->context->smarty->assign('errors', $errors);
 		
 		// You can return html, but I prefer this new version: use smarty in admin, :)
 		return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
