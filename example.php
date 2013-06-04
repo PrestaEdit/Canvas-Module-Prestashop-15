@@ -196,11 +196,13 @@ class Example extends Module
 	{		
 		if(isset($errors))
 			$this->context->smarty->assign('errors', $errors);
-		
+		else
+			$errors = array();
 		$this->context->smarty->assign('request_uri', Tools::safeOutput($_SERVER['REQUEST_URI']));
 		$this->context->smarty->assign('path', $this->_path);
 		$this->context->smarty->assign('EXAMPLE_CONF', pSQL(Tools::getValue('EXAMPLE_CONF', Configuration::get('EXAMPLE_CONF'))));
 		$this->context->smarty->assign('submitName', 'submit'.ucfirst($this->name));
+		$this->context->smarty->assign('errors', $errors);
 		
 		// You can return html, but I prefer this new version: use smarty in admin, :)
 		return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
