@@ -2,10 +2,10 @@
 /**
  * Module Example - Main file
  *
- * @category   	Module / checkout
+ * @category   	Module / documentation
  * @author     	PrestaEdit <j.danse@prestaedit.com>
- * @copyright  	2012 PrestaEdit
- * @version   	1.5
+ * @copyright  	2012-2013 PrestaEdit
+ * @version   	1.5.1
  * @link       	http://www.prestaedit.com/
  * @since      	File available since Release 1.0
 */
@@ -77,7 +77,7 @@ class Example extends Module
 	  // Tab where it's the module (administration, front_office_features, ...)
 	  $this->tab = 'others';	
 	  // Current version of the module
-	  $this->version = '1.5';
+	  $this->version = '1.5.1';
 	  
 	  // Min version of PrestaShop wich the module can be install
 	  $this->ps_versions_compliancy['min'] = '1.5';
@@ -123,15 +123,17 @@ class Example extends Module
 								
 		// Install Tabs
 		$parent_tab = new Tab();
-		$parent_tab->name = 'Main Tab Example';
+		// Need a foreach for the language
+		$parent_tab->name[$this->context->language->id] = $this->l('Main Tab Example');
 		$parent_tab->class_name = 'AdminMainExample';
 		$parent_tab->id_parent = 0; // Home tab
 		$parent_tab->module = $this->name;
 		$parent_tab->add();
 		
 		
-		$tab = new Tab();
-		$tab->name = 'Tab Example';
+		$tab = new Tab();		
+		// Need a foreach for the language
+		$tab->name[$this->context->language->id] = $this->l('Tab Example'-;
 		$tab->class_name = 'AdminExample';
 		$tab->id_parent = $parent_tab->id;
 		$tab->module = $this->name;
