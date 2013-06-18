@@ -133,7 +133,7 @@ class Example extends Module
 		
 		$tab = new Tab();		
 		// Need a foreach for the language
-		$tab->name[$this->context->language->id] = $this->l('Tab Example'-;
+		$tab->name[$this->context->language->id] = $this->l('Tab Example');
 		$tab->class_name = 'AdminExample';
 		$tab->id_parent = $parent_tab->id;
 		$tab->module = $this->name;
