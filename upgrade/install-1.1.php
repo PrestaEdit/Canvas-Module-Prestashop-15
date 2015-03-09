@@ -25,11 +25,14 @@
 */
 
 if (!defined('_PS_VERSION_'))
-    exit;
+	exit;
 
 function upgrade_module_1_1($object, $install = false)
 {
 	// Do something...
+
+	$object = $object;
+	$install = $install;
 
 	return true;
 }

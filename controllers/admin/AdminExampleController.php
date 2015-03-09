@@ -83,11 +83,11 @@ class AdminExampleController extends ModuleAdminController
 
 		// Gère les positions
 		$this->fields_list['position'] = array(
-    'title' => $this->l('Position'),
-    'width' => 70,
-    'align' => 'center',
-    'position' => 'position'
-   );
+			'title' => $this->l('Position'),
+			'width' => 70,
+			'align' => 'center',
+			'position' => 'position'
+		);
 
 		$lists = parent::renderList();
 
@@ -190,9 +190,8 @@ class AdminExampleController extends ModuleAdminController
 		if (!($obj = $this->loadObject(true)))
 			return;
 
-
-		/*gestion de l'affichage de la vignette
-		@TODO : problème, suppression d'image
+		/* Thumbnail
+		 * @todo Error, deletion of the image
 		*/
 		$image = ImageManager::thumbnail(_PS_IMG_DIR_.'region/'.$obj->id.'.jpg', $this->table.'_'.(int)$obj->id.'.'.$this->imageType, 350, $this->imageType, true);
 
@@ -202,9 +201,7 @@ class AdminExampleController extends ModuleAdminController
 
 		);
 
-
-
-		$this->fields_value = array('lorem' => "ipsum");
+		$this->fields_value = array('lorem' => 'ipsum');
 
 		return parent::renderForm();
 	}
