@@ -25,54 +25,42 @@
 */
 
 /**
- * Module Example - Main file
- *
- * @category   	Module / documentation
- * @author     	PrestaEdit <j.danse@prestaedit.com>
- * @copyright  	2012-2013 PrestaEdit
- * @version   	1.5.1
- * @link       	http://www.prestaedit.com/
- * @since      	File available since Release 1.0
-*/
-
-/**
  * Module Example - Notes
-*/
-/*
- 	// Know if the module is enabled or not
- 	Module::isEnabled($this->name);
-
- 	// Know if the module is install or not
-	Module::isInstalled($this->name);
-
-	// Know if the module is registerd in one particular hook
-	$this->isRegisteredInHook('hook_name');
-
-	// Use the cache
-	$this->isCached($template);
-
-	//	Check if the module is transplantable on the hook in parameter
-	$this->isHookableOn('hook_name');
-
-	// Get errors, warning, ...
-	$this->getErrors();
-	$this->getConfirmations();
-
-	// add a warning message to display at the top of the admin page
-	$this->adminDisplayWarning('message');
-
-	// add a info message to display at the top of the admin page
-	adminDisplayInformation('message');
-
-	// You don't need to call this one BUT, if you want to make an override in
-	// a new version of your module, you will need to call this one (it's call
-	// only in install, at first)
-	$this->installOverrides();
-
-	// You can disable the module for one shop (the actual in context)
-	$this->disable();
-	// ... or for all shop
-	$this->disabel(true);
+ *
+ * Know if the module is enabled or not
+ * 	Module::isEnabled($this->name);
+ *
+ * Know if the module is install or not
+ * 	Module::isInstalled($this->name);
+ *
+ * Know if the module is registerd in one particular hook
+ * 	$this->isRegisteredInHook('hook_name');
+ *
+ * Use the cache
+ * 	$this->isCached($template);
+ *
+ * Check if the module is transplantable on the hook in parameter
+ * 	$this->isHookableOn('hook_name');
+ *
+ * Get errors, warning, ...
+ * 	$this->getErrors();
+ * 	$this->getConfirmations();
+ *
+ * Add a warning message to display at the top of the admin page
+ * 	$this->adminDisplayWarning('message');
+ *
+ * Add a info message to display at the top of the admin page
+ * 	adminDisplayInformation('message');
+ *
+ * You don't need to call this one BUT, if you want to make an override in
+ * a new version of your module, you will need to call this one (it's call
+ * only in install, at first)
+ * 	$this->installOverrides();
+ *
+ * You can disable the module for one shop (the actual in context)
+ * 	$this->disable();
+ * ... or for all shop
+ * 	$this->disabel(true);
 */
 
 /**
